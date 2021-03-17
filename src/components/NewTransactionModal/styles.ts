@@ -1,5 +1,8 @@
 import styled from 'styled-components'
-import { darken } from 'polished'
+import { darken, transparentize } from 'polished'
+
+import { TransactionTypeState } from '.'
+
 
 export const Container = styled.form`
   h2 {
@@ -50,31 +53,44 @@ export const NewTransactionTypeContainer = styled.div`
   align-items: center;
   margin: 1rem 0;
   gap: 0.5rem;
+`
 
-  button {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 0.25rem;
-    height: 4rem;
-    border: 1px solid #d7d7d7;
-    transition: border-color 0.2s;
+type TypeButtonProps = {
+  transactionType: TransactionTypeState;
+  isActive: boolean;
+}
 
-    img {
-      width: 20px;
-      height: 20px;
-    }
+const TypeButtonModifiers = {
+  income: '#33CC95',
+  withdraw: '#e52e4d'
+}
 
-    span {
-      display: inline-block;
-      margin-left: 0.5rem;
-      font-size: 1rem;
-      color: var(--text-title);
-    }
 
-    &:hover {
-      border-color: ${darken(0.1, '#d7d7d7')};
-    }
+export const TypeButton = styled.button<TypeButtonProps>`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25rem;
+  height: 4rem;
+  border: 1px solid #d7d7d7;
+  transition: border-color 0.2s;
+
+  background: ${props => props.isActive ? transparentize(0.9, TypeButtonModifiers[props.transactionType]) : ''};
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+
+  span {
+    display: inline-block;
+    margin-left: 0.5rem;
+    font-size: 1rem;
+    color: var(--text-title);
+  }
+
+  &:hover {
+    border-color: ${darken(0.1, '#d7d7d7')};
   }
 `

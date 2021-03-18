@@ -61,7 +61,7 @@ type TypeButtonProps = {
 }
 
 const TypeButtonModifiers = {
-  income: '#33CC95',
+  deposit: '#33CC95',
   withdraw: '#e52e4d'
 }
 

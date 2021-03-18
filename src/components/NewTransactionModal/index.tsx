@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import Modal, { Props } from 'react-modal'
 import closeImg from '../../assets/close.svg'
 import incomeImg from '../../assets/income.svg'
@@ -7,29 +7,39 @@ import outcomeImg from '../../assets/outcome.svg'
 
 import * as S from './styles'
 
-export type TransactionTypeState = 'income' | 'withdraw'
+export type TransactionTypeState = 'deposit' | 'withdraw'
 
 type NewTransactionModalProps = Props
 
 export function NewTransactionModal({ onRequestClose,...props}: NewTransactionModalProps) {
-  const [type, setType] = useState<TransactionTypeState>('income')
+  const [title, setTitle] = useState('')
+  const [value, setValue] = useState(0)
+  const [type, setType] = useState<TransactionTypeState>('deposit')
+  const [category, setCategory] = useState('')
+
+  function handleCreateNewTransaction(event: FormEvent) {
+    event.preventDefault();
+
+    console.log(title, value, type, category)
+  }
+
 
   return (
     <Modal {...props} onRequestClose={onRequestClose} overlayClassName='react-modal-overlay' className='react-modal-content'>
       <button type='button' className='react-modal-close' onClick={onRequestClose}>
         <img src={closeImg} alt="Fechar modal"/>
       </button>
-      <S.Container>
+      <S.Container onSubmit={handleCreateNewTransaction}>
         <h2>Cadastrar transação</h2>
 
-        <input type="text" placeholder='Título'/>
-        <input type="number" placeholder='Valor'/>
+        <input type="text" placeholder='Título' onChange={e => setTitle(e.target.value)} value={title}/>
+        <input type="number" placeholder='Valor' onChange={e => setValue(Number(e.target.value))} value={value}/>
 
         <S.NewTransactionTypeContainer>
             <S.TypeButton 
               type='button' 
-              onClick={() => setType('income')} 
-              isActive={type === 'income'} 
+              onClick={() => setType('deposit')} 
+              isActive={type === 'deposit'} 
               transactionType={type}
             >
               <img src={incomeImg} alt="Entrada"/>
@@ -46,7 +56,7 @@ export function NewTransactionModal({ onRequestClose,...props}: NewTransactionMo
             </S.TypeButton>
         </S.NewTransactionTypeContainer>
 
-        <input type="text" placeholder='Categoria'/>
+        <input type="text" placeholder='Categoria' onChange={e => setCategory(e.target.value)} value={category}/>
 
         <button type="submit">Cadastrar</button>
       </S.Container>     

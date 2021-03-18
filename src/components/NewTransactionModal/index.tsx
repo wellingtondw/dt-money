@@ -20,6 +20,13 @@ export function NewTransactionModal({ onRequestClose,...props}: NewTransactionMo
   const [type, setType] = useState<TransactionTypeState>('deposit')
   const [category, setCategory] = useState('')
 
+  function reset() {
+    setTitle('')
+    setAmount(0)
+    setType('deposit')
+    setCategory('')
+  }
+
   async function handleCreateNewTransaction(event: FormEvent) {
     event.preventDefault();
 
@@ -30,7 +37,9 @@ export function NewTransactionModal({ onRequestClose,...props}: NewTransactionMo
       type
     })
 
+    reset()
     onRequestClose()
+    
   }
 
 

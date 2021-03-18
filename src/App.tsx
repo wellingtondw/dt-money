@@ -7,6 +7,7 @@ import { GlobalStyle } from "./styles/global";
 import { Header } from "./components/Header";
 import { Dashboard } from "./pages/Dashboard";
 import { NewTransactionModal } from './components/NewTransactionModal'
+import { TransactionsProvider } from './hooks/useTransaction';
 
 
 createServer({
@@ -66,11 +67,11 @@ export function App() {
   }
 
   return (
-    <>
+    <TransactionsProvider>
       <Header openNewTransactionModal={handleOpenNewTransactionModal}/>
       <Dashboard />
       <NewTransactionModal isOpen={isNewTransactionModalOpen} onRequestClose={handleCloseNewTransactionModal}/>
       <GlobalStyle />
-    </>
+    </TransactionsProvider>
   );
 }
